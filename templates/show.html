@@ -1,0 +1,48 @@
+<!doctype HTML>
+<html>
+    <head>
+        <title>SQL</title>
+        
+        <style type="text/css">
+            table {
+                text-align: center;
+                border: 1px solid black;
+            }
+            th, td {
+                width: 150px;
+            }
+            th {
+                border: 2px solid black;
+            }
+            td {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        {% if error is not none %}
+            {{ error }}
+        {% else %}
+            <table>
+                <tr>
+                    {% for feature in header %}
+                        <th>{{ feature[0] }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in data %}
+                    <tr>
+                        {% for column in row %}
+                            {% if column is not none %}
+                                <td>{{ column }}</td>
+                            {% else %}
+                                <td>/</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        
+        <br><br><a href="{{ url_for('home') }}">New query</a>
+    </body>
+</html>

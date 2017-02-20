@@ -1,0 +1,48 @@
+<!doctype HTML>
+<html>
+    <head>
+        <title>SQL</title>
+        <meta charset="utf-8">
+        
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+    <body>
+        {% if reminder %}
+        <!-- Lattest queries -->
+        <div class="queries">
+            <h2>Lattest queries</h2>
+            <div class="actual_queries">
+                {% for query in lattest_queries %}
+                <div class="query succ{{ query[3] }}" onclick="document.getElementById('editor').innerHTML = '{{ query[1] | replace('\'', '\\\'') | replace('\r\n', '&#13;&#10;') }}'">
+                    <span class="content">{{ query[1] }}</span>
+                    <br><br>
+                    <span class="time">{{ query[2] }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        <div class="settings">
+            
+        </div>
+        <div {% if reminder %}class="rest"{% endif %}>
+            <div class="main_content">
+                <!-- Massages -->
+                {% with flashes = get_flashed_messages(with_categories=true) %}
+                    {% for category, flash in flashes %}
+                        <div class="{{ category }}">{{ flash }}</div>
+                    {% endfor %}
+                {% endwith %}
+                
+                
+                
+                <h3>Write a query:</h3>
+                <form method="post">
+                    <textarea rows="15" cols="100" name="query" value="{{ request.form.query }}" id="editor"></textarea>
+                    <br>
+                    <input type="submit">
+                </form>
+            </div>
+        </div>    
+    </body>
+</html>
